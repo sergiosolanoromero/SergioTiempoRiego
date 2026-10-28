@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tiempo de riego · Sergio Solano Romero</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap">
+<style>
+:root{--bg:#0b3a9c;--bg2:#08297a;--panel:#062270;--line:#2a5bd0;--y:#ffd60a;--g:#5aeb78;--ink:#e6efff;--err:#ff9d8a;color-scheme:dark;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#082d84;--bg2:#061f5e;--panel:#051a55;--line:#2450b8}}
+:root[data-theme="dark"]{--bg:#082d84;--bg2:#061f5e;--panel:#051a55;--line:#2450b8}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;font-family:Lato,"Segoe UI",Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--bg),var(--bg2));line-height:1.45}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 18px 48px}
+.perfil{display:flex;gap:18px;align-items:center;background:var(--panel);border:2px solid var(--line);border-left:6px solid var(--y);border-radius:18px;padding:18px 22px;margin-bottom:26px}
+.ini{flex:none;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:1.35rem;letter-spacing:.02em;color:var(--y);border:3px solid var(--g);background:var(--bg2)}
+.perfil .nom{margin:0;font-size:clamp(1.25rem,3.2vw,1.7rem);font-weight:900;color:var(--y);line-height:1.15}
+.perfil .tit{margin:2px 0 0;font-weight:700;color:var(--g);font-size:1.02rem}
+.perfil .svc{margin:8px 0 0;font-size:.95rem;color:var(--ink);opacity:.95}
+.perfil .svc span{white-space:nowrap}
+.perfil .svc i{font-style:normal;color:var(--g);margin:0 6px}
+@media(max-width:560px){.perfil{flex-direction:column;align-items:flex-start;padding:16px}}
+.rv{margin-top:26px}
+.rv h2.t{margin:0 0 4px;font-size:1.5rem;font-weight:900;color:var(--y)}
+.rv .lead{margin:0 0 18px;color:var(--g)}
+.rv .stack{display:grid;gap:16px}
+.rv svg{width:100%;height:auto;display:block;border:2px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#5aa6ee,#cfe6fb)}
+.rv .dims{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 22px}
+@media(max-width:560px){.rv .dims{grid-template-columns:1fr}}
+.rv .dims div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:6px 0}
+.rv .dims span{opacity:.9}.rv .dims b{color:var(--y);text-align:right}
+.rv .hint{font-size:.85rem;opacity:.85;margin:4px 0 0}
+.pie{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);font-size:.9rem;color:var(--ink);opacity:.9}
+.pie b{color:var(--y)}
+h1{margin:0;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:900;color:var(--y);letter-spacing:-.01em}
+.sub{margin:6px 0 24px;color:var(--g);font-size:1.05rem}
+.grid{display:grid;grid-template-columns:minmax(0,370px) minmax(0,1fr);gap:20px;align-items:start}
+@media(max-width:820px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:2px solid var(--line);border-radius:18px;padding:20px}
+.card h2{margin:0 0 14px;font-size:1.15rem;color:var(--y)}
+label{display:block;font-weight:700;color:var(--g);font-size:.95rem;margin:12px 0 4px}
+label small{font-weight:400;color:var(--ink);opacity:.8}
+input,select{width:100%;padding:11px 12px;font:inherit;font-size:1.05rem;color:var(--ink);background:var(--bg2);border:2px solid var(--line);border-radius:10px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--y);outline-offset:2px}
+input.bad{border-color:var(--err)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btns{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+button{font:inherit;font-weight:700;border-radius:10px;padding:11px 16px;cursor:pointer;border:2px solid var(--y)}
+.main{background:var(--y);color:#062270;flex:1}
+.ghost{background:transparent;color:var(--y)}
+.opt{margin-top:18px;padding-top:6px;border-top:1px dashed var(--line)}
+.opt h3{margin:12px 0 0;font-size:1rem;color:var(--y)}
+.res{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:560px){.res{grid-template-columns:1fr}}
+.m{border:2px solid var(--g);border-radius:16px;padding:16px;background:var(--bg2)}
+.m.h{border-color:var(--y)}
+.m h3{margin:0;font-size:1.05rem;color:var(--g)}
+.m.h h3{color:var(--y)}
+.big{font-size:3rem;font-weight:900;color:var(--y);line-height:1.1;margin:8px 0 0}
+.m.h .big{color:var(--g)}
+.big span{font-size:1.05rem;font-weight:700;color:var(--ink);margin-left:6px}
+.mes{color:var(--g);font-weight:700;margin:2px 0 10px}
+.m.h .mes{color:var(--y)}
+dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:.95rem}
+dt{opacity:.85}dd{margin:0;font-weight:700;text-align:right}
+.diff{margin-top:16px;padding:12px 16px;border-radius:12px;border:2px solid var(--y);background:var(--panel);font-weight:700;color:var(--y)}
+.diff b{color:var(--g)}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.95rem}
+th,td{padding:7px 6px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--g)}td{font-weight:700}
+.empty{padding:34px 14px;text-align:center;color:var(--g);font-size:1.05rem}
+.msg{color:var(--err);font-weight:700;margin-top:10px;font-size:.95rem}
+details{margin-top:18px}
+summary{cursor:pointer;color:var(--y);font-weight:700}
+.f{font-family:"Courier New",monospace;background:var(--bg2);padding:10px 12px;border-radius:10px;margin:8px 0;font-size:.92rem;overflow-x:auto;white-space:pre}
+.note{font-size:.88rem;opacity:.85;margin:6px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="perfil" aria-label="Autor de la herramienta">
+<div class="ini" aria-hidden="true">SS</div>
+<div>
+<p class="nom">Sergio Solano Romero</p>
+<p class="tit">Ingeniero Agrícola</p>
+<p class="svc"><span>Diseño e instalación de sistemas de riego</span><i>·</i><span>Fertirriego</span><i>·</i><span>Conservación de suelos</span><i>·</i><span>Diseño y construcción de invernaderos</span></p>
+</div>
+</header>
+<h1>Calculadora de tiempo de riego</h1>
+<p class="sub">Caudales por sector y horas de riego a partir de la lámina neta y las características del sistema por goteo</p>
+<section class="rv" id="tiempo" aria-label="Cálculo del tiempo de riego">
+<div class="grid">
+<div class="card" aria-label="Datos del sistema de riego">
+<h2>Datos del sistema de riego</h2>
+<label for="tr_np">Número de plantas</label><input id="tr_np" inputmode="decimal" placeholder="12500">
+<label for="tr_ng">Número de goteros por planta</label><input id="tr_ng" inputmode="decimal" placeholder="2">
+<label for="tr_qg">Caudal por gotero <small>(L/hora)</small></label><input id="tr_qg" inputmode="decimal" placeholder="1,6">
+<label for="tr_ns">Número de sectores de riego</label><input id="tr_ns" inputmode="decimal" placeholder="4">
+<label for="tr_ln">Lámina neta <small>(m³)</small></label><input id="tr_ln" inputmode="decimal" placeholder="286">
+<div class="opt"><h3>Datos de referencia (opcionales)</h3>
+<label for="tr_p">Coeficiente de agotamiento <small>(%)</small></label><input id="tr_p" inputmode="decimal" placeholder="45">
+<label for="tr_etr">ETr <small>(m³/día)</small></label><input id="tr_etr" inputmode="decimal" placeholder="50,625">
+<p class="hint">Estos dos datos no entran en el cálculo del tiempo de riego. Si ingresa la ETr, la página también muestra la frecuencia de riego (Ln / ETr, redondeada hacia arriba).</p></div>
+<div class="btns"><button class="main" id="tr_calc">Calcular</button><button class="ghost" id="tr_ej">Cargar ejemplo</button><button class="ghost" id="tr_lim">Limpiar</button></div>
+<div class="msg" id="tr_msg" role="alert"></div>
+</div>
+<div id="tr_out" aria-live="polite"><div class="card"><div class="empty">Ingrese los datos del sistema para calcular el tiempo de riego.</div></div></div>
+</div>
+<details class="card" style="margin-top:20px"><summary>Fórmulas utilizadas</summary>
+<div class="f">Plantas por sector = Número de plantas / Sectores
+Total de goteros = Número de plantas · Goteros por planta
+Caudal total (m³/h) = Caudal del gotero (L/h) · Total de goteros / 1000
+Caudal por sector (m³/h) = Caudal total / Sectores
+Ln por sector (m³) = Ln / Sectores
+Tiempo de riego (h) = Ln por sector / Caudal por sector</div>
+<p class="note">Se asume que los sectores tienen igual número de plantas y que se riegan uno a la vez, con el caudal total dividido entre ellos. El tiempo es el de cada sector; el tiempo total del evento es ese valor por el número de sectores. Es un cálculo preliminar: no incluye eficiencia de aplicación, pérdidas de presión ni variación de caudal de los goteros.</p></details>
+</section>
+<footer class="pie">Herramienta elaborada por <b>Sergio Solano Romero</b>, Ingeniero Agrícola. El cálculo es preliminar y no sustituye el diseño técnico, los estudios de suelo ni la revisión de un profesional.</footer>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const num = s => { s=String(s).trim(); if(!s) return NaN; const v=parseFloat(s.replace(",",".")); return isFinite(v)?v:NaN };
+const fm = (v,d=2) => { const [i,dec]=v.toFixed(d).split("."); const ent=i.replace(/\B(?=(\d{3})+$)/g,"\u00a0"); return dec?ent+","+dec:ent };
+const REQ=["tr_np","tr_ng","tr_qg","tr_ns","tr_ln"], ALL=REQ.concat(["tr_p","tr_etr"]);
+const VACIO='<div class="card"><div class="empty">Ingrese los datos del sistema para calcular el tiempo de riego.</div></div>';
+function hm(h){ let m=Math.round(h*60); return Math.floor(m/60)+" h "+String(m%60).padStart(2,"0")+" min" }
+function tiempo(show){
+  ALL.forEach(i=>$(i).classList.remove("bad")); $("tr_msg").textContent="";
+  const v={}; ALL.forEach(i=>v[i]=num($(i).value));
+  const malos=REQ.filter(i=>!(v[i]>0));
+  const opt=[["tr_p",!isNaN(v.tr_p)&&!(v.tr_p>0&&v.tr_p<=100)],["tr_etr",!isNaN(v.tr_etr)&&!(v.tr_etr>0)]].filter(c=>c[1]).map(c=>c[0]);
+  if(malos.length||opt.length){ if(show){malos.concat(opt).forEach(i=>$(i).classList.add("bad")); $("tr_msg").textContent="Complete los datos obligatorios con valores mayores que 0 (el agotamiento entre 0 y 100)."} $("tr_out").innerHTML=VACIO; return }
+  const np=v.tr_np, ng=v.tr_ng, qg=v.tr_qg, ns=v.tr_ns, ln=v.tr_ln;
+  const pps=np/ns, tg=np*ng, qt=qg*tg/1000, qs=qt/ns, lns=ln/ns, t=lns/qs;
+  const dec=Number.isInteger(pps)?0:1;
+  let extra="";
+  if(v.tr_etr>0){ const fe=ln/v.tr_etr, f=Math.max(1,Math.ceil(fe-1e-9)); extra=`<div><span>Frecuencia de riego (Ln / ETr)</span><b>${f} ${f===1?"día":"días"}</b></div>`; }
+  $("tr_out").innerHTML=`<div class="stack">
+  <div class="m h"><h3>Tiempo de riego por sector</h3><div class="big">${fm(t,2)}<span>horas</span></div><div class="mes">${hm(t)} por sector · ${fm(t*ns,2)} h en total para los ${fm(ns,0)} sectores</div></div>
+  <div class="m"><h3>Resultados del cálculo</h3><div class="dims">
+  <div><span>Plantas por sector</span><b>${fm(pps,dec)}</b></div><div><span>Total de goteros</span><b>${fm(tg,0)}</b></div>
+  <div><span>Caudal total de riego</span><b>${fm(qt,2)} m³/h</b></div><div><span>Caudal por sector</span><b>${fm(qs,2)} m³/h</b></div>
+  <div><span>Ln por sector</span><b>${fm(lns,2)} m³</b></div><div><span>Tiempo de riego</span><b>${fm(t,2)} h</b></div>
+  ${extra}
+  </div></div></div>`;
+}
+$("tr_calc").onclick=()=>tiempo(true);
+ALL.forEach(i=>$(i).addEventListener("input",()=>tiempo(false)));
+$("tr_ej").onclick=()=>{ const e={tr_np:"12500",tr_ng:"2",tr_qg:"1,6",tr_ns:"4",tr_ln:"286",tr_p:"45",tr_etr:"50,625"}; for(const k in e)$(k).value=e[k]; tiempo(true) };
+$("tr_lim").onclick=()=>{ ALL.forEach(i=>$(i).value=""); tiempo(false) };
+</script>
+</body>
+</html>
